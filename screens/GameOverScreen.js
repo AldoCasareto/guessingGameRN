@@ -4,7 +4,7 @@ import React from 'react';
 const GameOverScreen = () => {
   return (
     <View>
-      <Text>GameOverScreen</Text>
+      <Text>game is over</Text>
     </View>
   );
 };

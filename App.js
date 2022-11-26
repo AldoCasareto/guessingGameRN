@@ -3,18 +3,38 @@ import StartGameScreen from './screens/StartGameScreen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
   const [userNumber, setuserNumber] = useState(null);
+  const [isGameIsOver, setIsGameIsOver] = useState(true);
+
+  const [fontsLoaded] = useFonts({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) return <AppLoading />;
 
   const pickNumberHandler = (pickedNumber) => {
     setuserNumber(pickedNumber);
+    setIsGameIsOver(false);
+  };
+
+  const gameIsOverHandler = () => {
+    setIsGameIsOver(true);
   };
 
   let screen = <StartGameScreen pickNumberHandler={pickNumberHandler} />;
 
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} />;
+    screen = <GameScreen userNumber={userNumber} gameIsOverHandler={gameIsOverHandler} />;
+  }
+
+  if (isGameIsOver && userNumber) {
+    screen = <GameOverScreen />;
   }
 
   return (

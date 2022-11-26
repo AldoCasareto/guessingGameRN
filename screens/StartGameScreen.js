@@ -1,6 +1,9 @@
-import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, Alert } from 'react-native';
 import React, { useState } from 'react';
 import PrimaryButton from '../components/ui/PrimaryButton';
+import Title from '../components/ui/Title';
+import Card from '../components/ui/Card';
+import InstructionText from '../components/ui/InstructionText';
 
 const StartGameScreen = ({ pickNumberHandler }) => {
   const [guess, setGuess] = useState(null);
@@ -20,28 +23,31 @@ const StartGameScreen = ({ pickNumberHandler }) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <Text>StartGameScreen</Text>
-      <TextInput
-        autoFocus={true}
-        style={styles.inputBox}
-        keyboardType='number-pad'
-        onChangeText={(value) => setGuess(value)}
-        value={guess}
-      />
-      <View style={styles.buttons}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={() => setGuesses([])}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess my Number!</Title>
+      <Card>
+        <InstructionText>Enter a number</InstructionText>
+        <TextInput
+          autoFocus={true}
+          style={styles.inputBox}
+          keyboardType='number-pad'
+          onChangeText={(value) => setGuess(value)}
+          value={guess}
+        />
+        <View style={styles.buttons}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={() => setGuesses([])}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={handleGuesses}>Guess!</PrimaryButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={handleGuesses}>Guess!</PrimaryButton>
-        </View>
-      </View>
-      <FlatList
-        data={guesses}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item: { guess } }) => <Text>{guess}</Text>}
-      />
+        {/* <FlatList
+          data={guesses}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item: { guess } }) => <Text>{guess}</Text>}
+        /> */}
+      </Card>
     </View>
   );
 };
@@ -49,26 +55,17 @@ const StartGameScreen = ({ pickNumberHandler }) => {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-    backgroundColor: '#876b79',
+  rootContainer: {
+    flex: 1,
     marginTop: 100,
-    marginHorizontal: '5%',
-    borderRadius: 8,
-    elevation: 4,
-    shadowColor: 'black',
-    shadowOffset: { height: 2, width: 0 },
-    shadowRadius: 6,
-    shadowOpacity: 0.25,
-    height: '20%',
+    alignItems: 'center',
   },
   inputBox: {
     fontSize: 32,
     width: '40%',
     textAlign: 'center',
     padding: 10,
+    height: 50,
   },
   buttons: {
     flexDirection: 'row',
