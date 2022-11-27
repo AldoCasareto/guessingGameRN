@@ -1,5 +1,5 @@
-import { View, Text, TextInput, FlatList, StyleSheet, Alert } from 'react-native';
 import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import Title from '../components/ui/Title';
 import Card from '../components/ui/Card';
@@ -7,7 +7,6 @@ import InstructionText from '../components/ui/InstructionText';
 
 const StartGameScreen = ({ pickNumberHandler }) => {
   const [guess, setGuess] = useState(null);
-  const [guesses, setGuesses] = useState([]);
 
   const handleGuesses = () => {
     const chosenNumber = +guess;
@@ -18,7 +17,6 @@ const StartGameScreen = ({ pickNumberHandler }) => {
       return;
     }
     pickNumberHandler(chosenNumber);
-    setGuesses((currentGuess) => [...currentGuess, { chosenNumber, id: new Date() }]);
     setGuess(null);
   };
 
@@ -42,11 +40,6 @@ const StartGameScreen = ({ pickNumberHandler }) => {
             <PrimaryButton onPress={handleGuesses}>Guess!</PrimaryButton>
           </View>
         </View>
-        {/* <FlatList
-          data={guesses}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item: { guess } }) => <Text>{guess}</Text>}
-        /> */}
       </Card>
     </View>
   );
